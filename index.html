@@ -1,68 +1,12 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>DOOOOOR</title>
-<style>
-:root{--bg:#101923;--panel:#172532;--floor:#d9d5c8;--wall:#33495b;--door:#a86d3d;--door2:#c48a4d;--goal:#85c77c;--player:#fff1c8;--ink:#f7f3e8;--muted:#93a5b4}
-*{box-sizing:border-box} body{margin:0;min-height:100dvh;background:radial-gradient(circle at 50% 0,#21394b 0,#101923 52%,#0a1118 100%);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;padding:16px}
-.app{width:min(94vw,520px)} header{text-align:center;margin-bottom:10px}.logo{font-size:clamp(36px,11vw,68px);font-weight:900;letter-spacing:.02em;line-height:1}.logo .o{display:inline-block;color:#f4d8a8;text-shadow:0 4px 18px #0008}.sub{margin-top:8px;letter-spacing:.28em;font-weight:700;color:#d9e1e7}.tag{margin-top:6px;font-size:12px;color:var(--muted)}
-.panel{background:#14212cdd;border:1px solid #ffffff18;border-radius:22px;padding:14px;box-shadow:0 18px 55px #0007}.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.stageName{font-weight:800}.hint{font-size:12px;color:var(--muted);text-align:right}.boardWrap{aspect-ratio:1/1;display:grid;place-items:center;background:#0d151c;border-radius:18px;padding:10px;overflow:hidden}.board{position:relative;display:grid;gap:3px;width:100%;height:100%;touch-action:none;user-select:none}.cell{border-radius:7px;background:var(--floor);position:relative;box-shadow:inset 0 0 0 1px #00000012}.cell.wall{background:linear-gradient(145deg,#40586a,#2a3d4c);box-shadow:inset 0 0 0 1px #ffffff12,0 3px 6px #0005}.cell.goal:after{content:"";position:absolute;inset:28%;border-radius:50%;background:var(--goal);box-shadow:0 0 0 5px #85c77c33}.door{position:absolute;border-radius:5px;background:linear-gradient(90deg,#8e572e,var(--door2));box-shadow:inset 0 0 0 2px #5b341c,0 3px 7px #0005;z-index:4;transition:transform .18s ease,opacity .18s ease}.door.closed:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#f5d27b;border:1px solid #6c4a1b;right:6px;top:50%;transform:translateY(-50%)}.door.bi{background:linear-gradient(90deg,#8a5a36,#d59a5a)}.door.block{background:linear-gradient(#6f4428,#b87643);opacity:.96}.player{position:absolute;z-index:6;border-radius:50%;background:var(--player);box-shadow:0 0 0 4px #ffffff33,0 5px 8px #0007;transition:left .11s ease,top .11s ease}.player:after{content:"";position:absolute;inset:28%;border-radius:50%;background:#45382d}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}.controls button,.stageBtn{appearance:none;border:1px solid #ffffff22;background:#203342;color:var(--ink);border-radius:14px;padding:12px 10px;font-weight:800}.controls button:active,.stageBtn:active{transform:translateY(1px)}.msg{height:24px;margin-top:8px;text-align:center;font-weight:800;color:#f3d89b}.stageGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.stageBtn.active{outline:2px solid #f1c77c;background:#2f4658}.legend{font-size:11px;color:var(--muted);line-height:1.45;margin-top:9px;text-align:center}.win{animation:pulse .5s ease}@keyframes pulse{50%{filter:brightness(1.22)}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111e28" />
+  <meta name="description" content="一度だけ開くドアで、道をつくる。蝶番とひらめきのパズル、DOOOOOR / ドアドアめぐり。" />
+  <title>DOOOOOR — ドアドアめぐり</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
 </head>
-<body>
-<div class="app">
-<header><div class="logo">D<span class="o">OOOOO</span>R</div><div class="sub">ドアドアめぐり</div><div class="tag">Every door opens only once.</div></header>
-<div class="panel">
-  <div class="topbar"><div class="stageName" id="stageName"></div><div class="hint" id="hint"></div></div>
-  <div class="boardWrap"><div class="board" id="board"></div></div>
-  <div class="controls"><button id="undo">UNDO</button><button id="restart">RESTART</button><button id="next">NEXT</button></div>
-  <div class="msg" id="msg"></div>
-  <div class="stageGrid" id="stageGrid"></div>
-  <div class="legend">矢印/WASD・スワイプで移動。ドアへ進むと押して開く。<br>開いたドアは別のマスをふさぎ、そのまま固定。</div>
-</div>
-</div>
-<script>
-const STAGES=[
-{n:'001 OPEN',h:'押すと、道がひらく。',m:[
-'#######','#S....#','###D.##','###.###','#.....#','#..G..#','#######'],d:[{id:'A',p:[3,2],from:[[3,1]],to:[4,2]}]},
-{n:'003 SWING',h:'開いた扉は、新しい壁になる。',m:[
-'#######','#S....#','#.#D#.#','#.....#','#.###.#','#...G.#','#######'],d:[{id:'A',p:[3,2],from:[[3,1]],to:[4,3]}]},
-{n:'005 NOT YET',h:'開けられる。でも、今？',m:[
-'#######','#S.D.G#','#.#.#.#','#.#D#.#','#.....#','#.....#','#######'],d:[{id:'A',p:[3,1],from:[[2,1]],to:[3,2]},{id:'B',p:[3,3],from:[[3,4]],to:[2,3]}]},
-{n:'009 COME BACK',h:'ゴールから遠ざかる。',m:[
-'#######','#GD....#','##..#.#','#.#.#.#','#...#D#','#S.D..#','#######'],d:[{id:'A',p:[2,1],from:[[3,1]],to:[2,2]},{id:'B',p:[5,4],from:[[5,5]],to:[4,4]},{id:'C',p:[3,5],from:[[2,5]],to:[3,4]}]},
-{n:'011 TWO WAYS',h:'どちら側から押す？',m:[
-'#######','#..G..#','#.....#','#..D..#','#.....#','#..S..#','#######'],d:[{id:'A',p:[3,3],bi:true,from:[[3,4],[3,2]],to:[[2,3],[4,3]]}]},
-{n:'012 CHOOSE',h:'道ではなく、壁の位置を選ぶ。',m:[
-'#######','#..G..#','#.#.#.#','#..D..#','#.#.#.#','#..S..#','#######'],d:[{id:'A',p:[3,3],bi:true,from:[[3,4],[3,2]],to:[[4,3],[2,3]]}]},
-{n:'018 HINGE KNOT',h:'ドアが、ドアを邪魔する。',m:[
-'#######','#..G..#','#.D.D.#','#..D..#','#.....#','#..S..#','#######'],d:[{id:'A',p:[2,2],bi:true,from:[[2,3],[2,1]],to:[[3,2],[1,2]]},{id:'B',p:[4,2],bi:true,from:[[4,3],[4,1]],to:[[3,2],[5,2]]},{id:'C',p:[3,3],bi:true,from:[[3,4],[3,2]],to:[[2,3],[4,3]]}]},
-{n:'020 DOOOOOR',h:'WHEN × WHICH WAY × LEAVE CLOSED',m:[
-'#######','#G.D..#','#.#.#D#','#D...##','#.#D#.#','#S..D.#','#######'],d:[{id:'A',p:[3,1],from:[[4,1]],to:[3,2]},{id:'B',p:[5,2],bi:true,from:[[5,1],[5,3]],to:[[4,2],[5,3]]},{id:'C',p:[1,3],from:[[1,4]],to:[2,3]},{id:'D',p:[3,4],bi:true,from:[[3,5],[3,3]],to:[[4,4],[2,4]]},{id:'E',p:[3,5],from:[[2,5]],to:[3,4]}]}
-];
-let si=0,state,history=[],won=false; const board=document.querySelector('#board'),msg=document.querySelector('#msg');
-const key=(p)=>p[0]+','+p[1];
-function parseStage(s){let start,goal,walls=new Set();s.m.forEach((r,y)=>[...r].forEach((c,x)=>{if(c==='#')walls.add(key([x,y]));if(c==='S')start=[x,y];if(c==='G')goal=[x,y]}));return{p:start,goal,walls,doors:s.d.map(d=>({...d,open:false,block:null})),w:s.m[0].length,h:s.m.length};}
-function cloneState(v){return{...v,p:[...v.p],goal:[...v.goal],walls:new Set(v.walls),doors:v.doors.map(d=>({...d,p:[...d.p],from:d.from.map(x=>[...x]),to:d.bi?d.to.map(x=>[...x]):[...d.to],block:d.block?[...d.block]:null}))};}
-function load(i){si=i;state=parseStage(STAGES[i]);history=[];won=false;msg.textContent='';document.querySelector('#stageName').textContent=STAGES[i].n;document.querySelector('#hint').textContent=STAGES[i].h;renderStages();render();}
-function blocked(p,ignoreDoor=null){if(state.walls.has(key(p)))return true;for(const d of state.doors){if(d===ignoreDoor)continue;if(!d.open&&key(d.p)===key(p))return true;if(d.open&&d.block&&key(d.block)===key(p))return true;}return false;}
-function tryMove(dx,dy){if(won)return;const np=[state.p[0]+dx,state.p[1]+dy];if(np[0]<0||np[1]<0||np[0]>=state.w||np[1]>=state.h)return;const door=state.doors.find(d=>!d.open&&key(d.p)===key(np));history.push(cloneState(state));if(door){const idx=door.from.findIndex(f=>key(f)===key(state.p));if(idx<0){history.pop();flash('この側からは押せない');return;}const target=door.bi?door.to[idx]:door.to;if(blocked(target,door)||key(target)===key(state.p)){history.pop();flash('ドアがつかえている');return;}door.open=true;door.block=[...target];state.p=[...door.p];flash('CLICK');}else{if(blocked(np)){history.pop();return;}state.p=np;}checkWin();render();}
-function checkWin(){if(key(state.p)===key(state.goal)){won=true;msg.textContent='CLEAR  ·  DOORS '+state.doors.filter(d=>d.open).length;board.classList.add('win');setTimeout(()=>board.classList.remove('win'),500);}}
-function flash(t){msg.textContent=t;clearTimeout(flash.t);flash.t=setTimeout(()=>{if(!won)msg.textContent=''},650)}
-function render(){board.innerHTML='';board.style.gridTemplateColumns=`repeat(${state.w},1fr)`;board.style.gridTemplateRows=`repeat(${state.h},1fr)`;for(let y=0;y<state.h;y++)for(let x=0;x<state.w;x++){const c=document.createElement('div');c.className='cell'+(state.walls.has(key([x,y]))?' wall':'')+(key([x,y])===key(state.goal)?' goal':'');board.appendChild(c)}
- const rect=board.getBoundingClientRect(),cw=rect.width/state.w,ch=rect.height/state.h, pad=4;
- for(const d of state.doors){const pos=d.open?d.block:d.p;if(!pos)continue;const el=document.createElement('div');el.className='door '+(d.open?'block':'closed')+(d.bi?' bi':'');el.style.left=(pos[0]*cw+pad)+'px';el.style.top=(pos[1]*ch+pad)+'px';el.style.width=(cw-pad*2)+'px';el.style.height=(ch-pad*2)+'px';if(d.open)el.style.transform='rotate(90deg) scale(.82)';board.appendChild(el)}
- const p=document.createElement('div');p.className='player';const s=Math.min(cw,ch)*.48;p.style.width=p.style.height=s+'px';p.style.left=(state.p[0]*cw+(cw-s)/2)+'px';p.style.top=(state.p[1]*ch+(ch-s)/2)+'px';board.appendChild(p);
-}
-function renderStages(){const g=document.querySelector('#stageGrid');g.innerHTML='';STAGES.forEach((s,i)=>{const b=document.createElement('button');b.className='stageBtn'+(i===si?' active':'');b.textContent=s.n.slice(0,3);b.onclick=()=>load(i);g.appendChild(b)})}
-addEventListener('resize',render);addEventListener('keydown',e=>{const m={ArrowUp:[0,-1],w:[0,-1],ArrowDown:[0,1],s:[0,1],ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0]}[e.key];if(m){e.preventDefault();tryMove(...m)}if(e.key==='z')undo();if(e.key==='r')load(si)});
-let sx,sy;board.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY});board.addEventListener('pointerup',e=>{const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<18)return;if(Math.abs(dx)>Math.abs(dy))tryMove(Math.sign(dx),0);else tryMove(0,Math.sign(dy))});
-function undo(){if(!history.length)return;state=history.pop();won=false;msg.textContent='';render()}
-document.querySelector('#undo').onclick=undo;document.querySelector('#restart').onclick=()=>load(si);document.querySelector('#next').onclick=()=>load((si+1)%STAGES.length);
-function solver(stage){let st=parseStage(stage),q=[st],seen=new Set(),steps=0;const enc=s=>key(s.p)+'|'+s.doors.map(d=>d.open?key(d.block):'C').join(';');seen.add(enc(st));while(q.length&&steps<30000){const cur=q.shift();steps++;if(key(cur.p)===key(cur.goal))return{ok:true,seen:seen.size};for(const [dx,dy] of [[0,-1],[1,0],[0,1],[-1,0]]){state=cloneState(cur);history=[];won=false;const np=[state.p[0]+dx,state.p[1]+dy];if(np[0]<0||np[1]<0||np[0]>=state.w||np[1]>=state.h)continue;const door=state.doors.find(d=>!d.open&&key(d.p)===key(np));if(door){const idx=door.from.findIndex(f=>key(f)===key(state.p));if(idx<0)continue;const target=door.bi?door.to[idx]:door.to;if(blocked(target,door)||key(target)===key(state.p))continue;door.open=true;door.block=[...target];state.p=[...door.p];}else{if(blocked(np))continue;state.p=np;}const e=enc(state);if(!seen.has(e)){seen.add(e);q.push(cloneState(state));}}
-}return{ok:false,seen:seen.size}}
-const reports=STAGES.map(s=>[s.n,solver(s)]);console.table(reports.map(([n,r])=>({stage:n,solvable:r.ok,states:r.seen})));load(0);
-</script>
-</body></html>
+<body><div id="app"></div><script type="module" src="/src/main.js"></script></body>
+</html>

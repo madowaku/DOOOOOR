@@ -1,0 +1,500 @@
+[
+  {
+    "id": "001",
+    "name": "OPEN",
+    "solvable": true,
+    "shortestSteps": 1,
+    "minimumDoorOpens": 1,
+    "canonical": "R",
+    "canonicalOpenings": [
+      "A:R"
+    ],
+    "reachableStates": 2,
+    "deadStates": 0,
+    "alwaysClosed": [],
+    "alwaysOpened": [
+      "A"
+    ],
+    "operationOutcomes": {
+      "A:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": null,
+    "explanation": "下への通路は壁。Aを右に押す1手が唯一の最短解。開いた葉は右下との境界に残る。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "R"
+        ]
+      }
+    ],
+    "additionalTraps": []
+  },
+  {
+    "id": "003",
+    "name": "SWING",
+    "solvable": true,
+    "shortestSteps": 4,
+    "minimumDoorOpens": 1,
+    "canonical": "DDLU",
+    "canonicalOpenings": [
+      "A:D"
+    ],
+    "reachableStates": 6,
+    "deadStates": 0,
+    "alwaysClosed": [],
+    "alwaysOpened": [
+      "A"
+    ],
+    "operationOutcomes": {
+      "A:D": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": null,
+    "explanation": "Aを下へ押すと左への辺が閉じる。そのまま左には行けず、下段を回って出口へ。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "D"
+        ]
+      }
+    ],
+    "additionalTraps": []
+  },
+  {
+    "id": "005",
+    "name": "NOT YET",
+    "solvable": true,
+    "shortestSteps": 2,
+    "minimumDoorOpens": 1,
+    "canonical": "DR",
+    "canonicalOpenings": [
+      "B:R"
+    ],
+    "reachableStates": 6,
+    "deadStates": 3,
+    "alwaysClosed": [
+      "A"
+    ],
+    "alwaysOpened": [
+      "B"
+    ],
+    "operationOutcomes": {
+      "A:R": {
+        "winningContinuation": false,
+        "deadContinuation": true
+      },
+      "B:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": {
+      "actions": "R",
+      "openings": [
+        "A:R"
+      ],
+      "solvable": false,
+      "lastChoiceDecisive": true
+    },
+    "explanation": "正面Aを開けるとBの回転先を占有し、出口への道が永久に閉じる。下へ回りBを押す。Aは最後まで開けない。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "R"
+        ]
+      },
+      {
+        "id": "B",
+        "allowedPushes": [
+          "R"
+        ]
+      }
+    ],
+    "additionalTraps": []
+  },
+  {
+    "id": "009",
+    "name": "COME BACK",
+    "solvable": true,
+    "shortestSteps": 3,
+    "minimumDoorOpens": 1,
+    "canonical": "DRU",
+    "canonicalOpenings": [
+      "B:R"
+    ],
+    "reachableStates": 6,
+    "deadStates": 0,
+    "alwaysClosed": [
+      "A"
+    ],
+    "alwaysOpened": [
+      "B"
+    ],
+    "operationOutcomes": {
+      "B:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": null,
+    "explanation": "隣の出口へ直進するとAの禁止側。まず出口から遠ざかり、下のBを押して上へ戻る。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "L"
+        ]
+      },
+      {
+        "id": "B",
+        "allowedPushes": [
+          "R"
+        ]
+      }
+    ],
+    "additionalTraps": []
+  },
+  {
+    "id": "011",
+    "name": "TWO WAYS",
+    "solvable": true,
+    "shortestSteps": 3,
+    "minimumDoorOpens": 0,
+    "canonical": "LLL",
+    "canonicalOpenings": [
+      "A:L"
+    ],
+    "reachableStates": 24,
+    "deadStates": 0,
+    "alwaysClosed": [],
+    "alwaysOpened": [],
+    "operationOutcomes": {
+      "A:L": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "A:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": null,
+    "explanation": "最短は左へ3手。Aを左に押すと左下への辺が閉じる。下を回る5手・開扉0枚も意図した自由な練習解。回り込めば右からも左からも実際に開けられ、どちらもクリア可能。ここでは開扉を強制しない。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "R",
+          "L"
+        ]
+      }
+    ],
+    "additionalTraps": []
+  },
+  {
+    "id": "012",
+    "name": "CHOOSE",
+    "solvable": true,
+    "shortestSteps": 5,
+    "minimumDoorOpens": 1,
+    "canonical": "URRRD",
+    "canonicalOpenings": [
+      "B:R"
+    ],
+    "reachableStates": 444,
+    "deadStates": 38,
+    "alwaysClosed": [],
+    "alwaysOpened": [],
+    "operationOutcomes": {
+      "B:R": {
+        "winningContinuation": true,
+        "deadContinuation": true
+      },
+      "A:U": {
+        "winningContinuation": true,
+        "deadContinuation": true
+      },
+      "D:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "B:L": {
+        "winningContinuation": true,
+        "deadContinuation": true
+      },
+      "D:L": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "C:D": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "E:L": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": {
+      "actions": "UURLDDRUL",
+      "openings": [
+        "D:R",
+        "A:U",
+        "B:L"
+      ],
+      "solvable": false,
+      "lastChoiceDecisive": true
+    },
+    "explanation": "最短は上からBを右に押し、右の出口へ。Dを右、Aを上に開いた局面では、Bを左に押すと最後の周回路を断つ。この9手の失敗例は最後のBまで復帰可能で、そこで初めて詰む。Bの左開きすべてが失敗するわけではなく、先行するドアとの組み合わせが問題。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "U"
+        ]
+      },
+      {
+        "id": "B",
+        "allowedPushes": [
+          "R",
+          "L"
+        ]
+      },
+      {
+        "id": "C",
+        "allowedPushes": [
+          "D"
+        ]
+      },
+      {
+        "id": "D",
+        "allowedPushes": [
+          "R",
+          "L"
+        ]
+      },
+      {
+        "id": "E",
+        "allowedPushes": [
+          "L"
+        ]
+      }
+    ],
+    "additionalTraps": []
+  },
+  {
+    "id": "018",
+    "name": "HINGE KNOT",
+    "solvable": true,
+    "shortestSteps": 6,
+    "minimumDoorOpens": 2,
+    "canonical": "DRDRDR",
+    "canonicalOpenings": [
+      "B:R",
+      "D:R"
+    ],
+    "reachableStates": 19,
+    "deadStates": 10,
+    "alwaysClosed": [
+      "A",
+      "C"
+    ],
+    "alwaysOpened": [
+      "B",
+      "D"
+    ],
+    "operationOutcomes": {
+      "A:R": {
+        "winningContinuation": false,
+        "deadContinuation": true
+      },
+      "B:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "C:R": {
+        "winningContinuation": false,
+        "deadContinuation": true
+      },
+      "D:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": {
+      "actions": "R",
+      "openings": [
+        "A:R"
+      ],
+      "solvable": false,
+      "lastChoiceDecisive": true
+    },
+    "explanation": "AとB、CとDがそれぞれ同じ回転先を共有。AまたはCを先に開くと必須の相方が開かなくなる。B、Dの順で二つの結び目を通る。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "R"
+        ]
+      },
+      {
+        "id": "B",
+        "allowedPushes": [
+          "R"
+        ]
+      },
+      {
+        "id": "C",
+        "allowedPushes": [
+          "R"
+        ]
+      },
+      {
+        "id": "D",
+        "allowedPushes": [
+          "R"
+        ]
+      }
+    ],
+    "additionalTraps": [
+      {
+        "actions": "DRDRR",
+        "openings": [
+          "B:R",
+          "C:R"
+        ],
+        "solvable": false,
+        "lastChoiceDecisive": true
+      }
+    ]
+  },
+  {
+    "id": "020",
+    "name": "DOOOOOR",
+    "solvable": true,
+    "shortestSteps": 11,
+    "minimumDoorOpens": 3,
+    "canonical": "DRDRDRDLLDL",
+    "canonicalOpenings": [
+      "B:R",
+      "D:R",
+      "F:L"
+    ],
+    "reachableStates": 42,
+    "deadStates": 22,
+    "alwaysClosed": [
+      "A",
+      "C",
+      "E"
+    ],
+    "alwaysOpened": [
+      "B",
+      "D",
+      "F"
+    ],
+    "operationOutcomes": {
+      "A:R": {
+        "winningContinuation": false,
+        "deadContinuation": true
+      },
+      "B:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "C:R": {
+        "winningContinuation": false,
+        "deadContinuation": true
+      },
+      "D:R": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "E:L": {
+        "winningContinuation": false,
+        "deadContinuation": true
+      },
+      "F:L": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": {
+      "actions": "R",
+      "openings": [
+        "A:R"
+      ],
+      "solvable": false,
+      "lastChoiceDecisive": true
+    },
+    "explanation": "二つの結び目をB→Dで抜け、下段を左へ戻る。最後はEを開くとFの左回転を塞ぐため、下へ回ってFを左に押す。逆向きの最後の結び目まで、三枚を閉じたまま残す。",
+    "restrictions": [
+      {
+        "id": "A",
+        "allowedPushes": [
+          "R",
+          "L"
+        ]
+      },
+      {
+        "id": "B",
+        "allowedPushes": [
+          "R"
+        ]
+      },
+      {
+        "id": "C",
+        "allowedPushes": [
+          "R",
+          "L"
+        ]
+      },
+      {
+        "id": "D",
+        "allowedPushes": [
+          "R"
+        ]
+      },
+      {
+        "id": "E",
+        "allowedPushes": [
+          "L"
+        ]
+      },
+      {
+        "id": "F",
+        "allowedPushes": [
+          "L"
+        ]
+      }
+    ],
+    "additionalTraps": [
+      {
+        "actions": "DRDRR",
+        "openings": [
+          "B:R",
+          "C:R"
+        ],
+        "solvable": false,
+        "lastChoiceDecisive": true
+      },
+      {
+        "actions": "DRDRDRDLLL",
+        "openings": [
+          "B:R",
+          "D:R",
+          "E:L"
+        ],
+        "solvable": false,
+        "lastChoiceDecisive": true
+      }
+    ]
+  }
+]
