@@ -42,7 +42,7 @@ function move(action) {
   if(screen!=='game'||document.querySelector('dialog[open]')||performance.now()<busyUntil) return;
   const previous=session.state, result=session.move(action);
   if(!result.moved) {
-    const messages = {'wall':'そこは壁。別の道を探そう。','fixed':'開いたドアは、もう動かせない。','wrong-side':'このドアは、反対側から押そう。','swing-wall':'回転する先に壁がある。','swing-door':'回転する先に、別のドアがある。'};
+    const messages = {'wall':'そこは壁。別の道を探そう。','fixed':'開いたドアは、もう動かせない。','wrong-side':'このドアは、反対側から押そう。','swing-wall':'ドアの回る範囲に、壁がある。','swing-door':'ドアの回る範囲に、別のドアがある。'};
     message=messages[result.reason]||''; sound('blocked',save.muted); render(); return;
   }
   message='';
@@ -56,7 +56,7 @@ function move(action) {
 }
 function help() {
   const dialog=document.createElement('dialog');
-  dialog.innerHTML=`<form method="dialog"><div class="dialog-heading"><p class="eyebrow">A LITTLE GUIDE</p><button class="icon-button" aria-label="閉じる">×</button></div><h2>開くのは、一度だけ。</h2><p>人物を緑の出口へ。ドアに向かって進むと、蝶番を中心に90度回転します。</p><ol><li><b>点線を見る。</b> ドアは点線の位置に残り、新しい壁になります。</li><li><b>押す側を選ぶ。</b> 小さな矢印が押せる方向。両側にあれば、両方から押せます。</li><li><b>やり直しは何度でも。</b> 行き止まりでも「ひと手戻す」で、ドアごと元通り。</li></ol><p class="muted">スワイプ・隣のマスをタップ・方向ボタン・矢印 / WASD。Z：戻す、R：やり直す。</p><label class="setting"><input type="checkbox" id="reduced" ${save.reduced?'checked':''}> 動きを減らす</label><button class="primary">わかった <span>→</span></button></form>`;
+  dialog.innerHTML=`<form method="dialog"><div class="dialog-heading"><p class="eyebrow">A LITTLE GUIDE</p><button class="icon-button" aria-label="閉じる">×</button></div><h2>開くのは、一度だけ。</h2><p>人物を緑の出口へ。ドアに向かって進むと、蝶番を中心に90度回転します。</p><ol><li><b>点線を見る。</b> ドアは点線の位置に残り、新しい壁になります。</li><li><b>押す側を選ぶ。</b> 小さな矢印が押せる方向。両側にあれば、両方から押せます。</li><li><b>長いドアも、90度。</b> 2マスの葉は一枚で回ります。途中に壁やドアがあれば開きません。</li><li><b>やり直しは何度でも。</b> 行き止まりでも「ひと手戻す」で、ドアごと元通り。</li></ol><p class="muted">スワイプ・隣のマスをタップ・方向ボタン・矢印 / WASD。Z：戻す、R：やり直す。</p><label class="setting"><input type="checkbox" id="reduced" ${save.reduced?'checked':''}> 動きを減らす</label><button class="primary">わかった <span>→</span></button></form>`;
   document.body.append(dialog); dialog.showModal();
   dialog.querySelector('#reduced').onchange=e=>{save.reduced=e.target.checked;persist();document.documentElement.classList.toggle('reduced',save.reduced);};
   dialog.addEventListener('close',()=>{dialog.remove();render();},{once:true});

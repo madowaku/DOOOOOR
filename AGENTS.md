@@ -4,12 +4,12 @@
 
 Turn this repository into a polished, genuinely playable mobile-first top-down **door puzzle game**. The game's identity comes from three questions: **WHEN** to open a door, **WHICH WAY** to swing it, and which doors to **LEAVE CLOSED**.
 
-The current `index.html` is an early disposable prototype, not a reference implementation for door physics, level quality, or solver correctness. **Do not preserve faulty mechanics for backward compatibility.** Keep the title spelled **DOOOOOR** (five O characters) and Japanese subtitle **ドアドアめぐり**.
+The original `index.html` on main at `9b36146` was a disposable prototype, not a reference implementation for door physics, level quality, or solver correctness. The current modular implementation is documented in README.md and docs/ENGINE.md. **Do not preserve faulty mechanics for backward compatibility.** Keep the title spelled **DOOOOOR** (five O characters) and Japanese subtitle **ドアドアめぐり**.
 
 ## Non-negotiable mechanics
 
-- A closed door occupies an **edge between adjacent walkable cells**, not an entire cell.
-- The hinge is at one endpoint of that edge. A legal opening swings the leaf 90 degrees around that hinge onto a **perpendicular edge that shares the hinge**. Thus an opening removes one blocked edge and creates another.
+- A closed door occupies **edges between adjacent walkable cells**, not entire cells. The user approved length-2 leaves on 2026-11-12: a door has length 1 (default) or 2, rotates as one rigid leaf, and can be pushed at either unit segment.
+- The hinge is at one endpoint of that edge. A legal opening swings the leaf 90 degrees around that hinge onto a **perpendicular span of equal length that shares the hinge**. Thus an opening removes one blocked edge and creates another.
 - Player **pushes** from the allowed side, never pulls. A one-way door only allows its designated side. A bidirectional door has two possible pushes, one from either side; push side determines final swing direction.
 - A door opens **at most once** and remains fixed forever during play. UNDO and RESTART can revert it.
 - For every opening, reject collision with solid wall/door leaf/other closed-door obstruction, overlapping occupied swing edges, and any other conditions defined by the physical simulation. Do not teleport leafs to arbitrary cells.

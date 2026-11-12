@@ -26,6 +26,7 @@
     "restrictions": [
       {
         "id": "A",
+        "length": 1,
         "allowedPushes": [
           "R"
         ]
@@ -34,7 +35,8 @@
     "additionalTraps": [],
     "minimumBidirectionalOpens": 0,
     "requiredInEveryWin": [],
-    "requiredOrder": []
+    "requiredOrder": [],
+    "longDoors": []
   },
   {
     "id": "003",
@@ -63,6 +65,7 @@
     "restrictions": [
       {
         "id": "A",
+        "length": 1,
         "allowedPushes": [
           "D"
         ]
@@ -71,32 +74,45 @@
     "additionalTraps": [],
     "minimumBidirectionalOpens": 0,
     "requiredInEveryWin": [],
-    "requiredOrder": []
+    "requiredOrder": [],
+    "longDoors": []
   },
   {
     "id": "005",
     "name": "NOT YET",
     "solvable": true,
-    "shortestSteps": 2,
-    "minimumDoorOpens": 1,
-    "canonical": "DR",
+    "shortestSteps": 25,
+    "minimumDoorOpens": 4,
+    "canonical": "URDDLLLURDRRUULDLRRUULDLU",
     "canonicalOpenings": [
-      "B:R"
+      "B:D",
+      "C:L",
+      "A:R",
+      "D:D"
     ],
-    "reachableStates": 6,
-    "deadStates": 3,
-    "alwaysClosed": [
-      "A"
-    ],
+    "reachableStates": 87,
+    "deadStates": 6,
+    "alwaysClosed": [],
     "alwaysOpened": [
-      "B"
+      "A",
+      "B",
+      "C",
+      "D"
     ],
     "operationOutcomes": {
       "A:R": {
-        "winningContinuation": false,
+        "winningContinuation": true,
         "deadContinuation": true
       },
-      "B:R": {
+      "B:D": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "C:L": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "D:D": {
         "winningContinuation": true,
         "deadContinuation": false
       }
@@ -109,25 +125,77 @@
       "solvable": false,
       "lastChoiceDecisive": true
     },
-    "explanation": "正面Aを開けるとBの回転先を占有し、出口への道が永久に閉じる。下へ回りBを押す。Aは最後まで開けない。",
+    "explanation": "正面Aの右押しは今は罠だが、全解で後から同じA:Rが必須。Bを下へ開け、長いCを左へ動かして戻り、Aを右へ。最後に長いDを下へ開く。",
     "restrictions": [
       {
         "id": "A",
+        "length": 1,
         "allowedPushes": [
           "R"
         ]
       },
       {
         "id": "B",
+        "length": 1,
         "allowedPushes": [
-          "R"
+          "D"
+        ]
+      },
+      {
+        "id": "C",
+        "length": 2,
+        "allowedPushes": [
+          "L"
+        ]
+      },
+      {
+        "id": "D",
+        "length": 2,
+        "allowedPushes": [
+          "D"
         ]
       }
     ],
     "additionalTraps": [],
     "minimumBidirectionalOpens": 0,
-    "requiredInEveryWin": [],
-    "requiredOrder": []
+    "requiredInEveryWin": [
+      "A:R",
+      "B:D",
+      "C:L",
+      "D:D"
+    ],
+    "requiredOrder": [
+      [
+        "A",
+        "D"
+      ],
+      [
+        "B",
+        "A"
+      ],
+      [
+        "B",
+        "C"
+      ],
+      [
+        "B",
+        "D"
+      ],
+      [
+        "C",
+        "D"
+      ]
+    ],
+    "delayed": {
+      "door": "A",
+      "action": "R",
+      "path": "R",
+      "prior": []
+    },
+    "longDoors": [
+      "C",
+      "D"
+    ]
   },
   {
     "id": "009",
@@ -158,12 +226,14 @@
     "restrictions": [
       {
         "id": "A",
+        "length": 1,
         "allowedPushes": [
           "L"
         ]
       },
       {
         "id": "B",
+        "length": 1,
         "allowedPushes": [
           "R"
         ]
@@ -174,7 +244,8 @@
     "requiredInEveryWin": [
       "B:R"
     ],
-    "requiredOrder": []
+    "requiredOrder": [],
+    "longDoors": []
   },
   {
     "id": "011",
@@ -209,6 +280,7 @@
     "restrictions": [
       {
         "id": "A",
+        "length": 1,
         "allowedPushes": [
           "R",
           "L"
@@ -216,6 +288,7 @@
       },
       {
         "id": "B",
+        "length": 1,
         "allowedPushes": [
           "R",
           "L"
@@ -233,40 +306,143 @@
         "A",
         "B"
       ]
-    ]
+    ],
+    "longDoors": []
   },
   {
     "id": "012",
     "name": "CHOOSE",
     "solvable": true,
-    "shortestSteps": 5,
-    "minimumDoorOpens": 1,
-    "canonical": "URRRD",
+    "shortestSteps": 12,
+    "minimumDoorOpens": 3,
+    "canonical": "LDRURDDRULUR",
     "canonicalOpenings": [
-      "B:R"
+      "B:L",
+      "A:U",
+      "C:L"
     ],
-    "reachableStates": 444,
-    "deadStates": 38,
+    "reachableStates": 64,
+    "deadStates": 13,
     "alwaysClosed": [],
-    "alwaysOpened": [],
+    "alwaysOpened": [
+      "A",
+      "B",
+      "C"
+    ],
     "operationOutcomes": {
-      "B:R": {
+      "B:L": {
         "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "B:R": {
+        "winningContinuation": false,
         "deadContinuation": true
       },
       "A:U": {
         "winningContinuation": true,
-        "deadContinuation": true
+        "deadContinuation": false
       },
-      "D:R": {
+      "C:L": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      }
+    },
+    "trap": {
+      "actions": "ULDR",
+      "openings": [
+        "B:R"
+      ],
+      "solvable": false,
+      "lastChoiceDecisive": true
+    },
+    "explanation": "両方向のBは左右とも実際に押せる。右へ押すと長いAの回転を妨げて詰み、左へ押すことが全解で必須。B→A→Cの順に三枚を動かす。",
+    "restrictions": [
+      {
+        "id": "A",
+        "length": 2,
+        "allowedPushes": [
+          "U"
+        ]
+      },
+      {
+        "id": "B",
+        "length": 1,
+        "allowedPushes": [
+          "R",
+          "L"
+        ]
+      },
+      {
+        "id": "C",
+        "length": 2,
+        "allowedPushes": [
+          "L"
+        ]
+      }
+    ],
+    "additionalTraps": [],
+    "minimumBidirectionalOpens": 1,
+    "requiredInEveryWin": [
+      "A:U",
+      "B:L",
+      "C:L"
+    ],
+    "requiredOrder": [
+      [
+        "A",
+        "C"
+      ],
+      [
+        "B",
+        "A"
+      ],
+      [
+        "B",
+        "C"
+      ]
+    ],
+    "choice": {
+      "door": "B",
+      "action": "R",
+      "path": "ULDR",
+      "prior": [],
+      "correct": "L"
+    },
+    "longDoors": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "018",
+    "name": "HINGE KNOT",
+    "solvable": true,
+    "shortestSteps": 15,
+    "minimumDoorOpens": 4,
+    "canonical": "DRUULRRULDLUUUL",
+    "canonicalOpenings": [
+      "A:D",
+      "B:L",
+      "C:D",
+      "E:L"
+    ],
+    "reachableStates": 70,
+    "deadStates": 16,
+    "alwaysClosed": [
+      "D"
+    ],
+    "alwaysOpened": [
+      "A",
+      "B",
+      "C",
+      "E"
+    ],
+    "operationOutcomes": {
+      "A:D": {
         "winningContinuation": true,
         "deadContinuation": false
       },
       "B:L": {
-        "winningContinuation": true,
-        "deadContinuation": true
-      },
-      "D:L": {
         "winningContinuation": true,
         "deadContinuation": false
       },
@@ -274,51 +450,59 @@
         "winningContinuation": true,
         "deadContinuation": false
       },
+      "D:L": {
+        "winningContinuation": false,
+        "deadContinuation": true
+      },
       "E:L": {
         "winningContinuation": true,
         "deadContinuation": false
       }
     },
     "trap": {
-      "actions": "UURLDDRUL",
+      "actions": "DRUULRRULDLUUL",
       "openings": [
-        "D:R",
-        "A:U",
-        "B:L"
+        "A:D",
+        "B:L",
+        "C:D",
+        "D:L"
       ],
       "solvable": false,
       "lastChoiceDecisive": true
     },
-    "explanation": "最短は上からBを右に押し、右の出口へ。Dを右、Aを上に開いた局面では、Bを左に押すと最後の周回路を断つ。この9手の失敗例は最後のBまで復帰可能で、そこで初めて詰む。Bの左開きすべてが失敗するわけではなく、先行するドアとの組み合わせが問題。",
+    "explanation": "Aを動かすと長いBの掃引領域が空き、Bを動かすと長いCを開けられる。A→B→C→Eの四段階が全解で必須。最後の共有蝶番ではDを閉じて残す。",
     "restrictions": [
       {
         "id": "A",
+        "length": 1,
         "allowedPushes": [
-          "U"
+          "D"
         ]
       },
       {
         "id": "B",
+        "length": 2,
         "allowedPushes": [
-          "R",
           "L"
         ]
       },
       {
         "id": "C",
+        "length": 2,
         "allowedPushes": [
           "D"
         ]
       },
       {
         "id": "D",
+        "length": 1,
         "allowedPushes": [
-          "R",
           "L"
         ]
       },
       {
         "id": "E",
+        "length": 1,
         "allowedPushes": [
           "L"
         ]
@@ -326,192 +510,145 @@
     ],
     "additionalTraps": [],
     "minimumBidirectionalOpens": 0,
-    "requiredInEveryWin": [],
-    "requiredOrder": []
-  },
-  {
-    "id": "018",
-    "name": "HINGE KNOT",
-    "solvable": true,
-    "shortestSteps": 6,
-    "minimumDoorOpens": 2,
-    "canonical": "DRDRDR",
-    "canonicalOpenings": [
-      "B:R",
-      "D:R"
+    "requiredInEveryWin": [
+      "A:D",
+      "B:L",
+      "C:D",
+      "E:L"
     ],
-    "reachableStates": 19,
-    "deadStates": 10,
-    "alwaysClosed": [
-      "A",
-      "C"
-    ],
-    "alwaysOpened": [
-      "B",
-      "D"
-    ],
-    "operationOutcomes": {
-      "A:R": {
-        "winningContinuation": false,
-        "deadContinuation": true
-      },
-      "B:R": {
-        "winningContinuation": true,
-        "deadContinuation": false
-      },
-      "C:R": {
-        "winningContinuation": false,
-        "deadContinuation": true
-      },
-      "D:R": {
-        "winningContinuation": true,
-        "deadContinuation": false
-      }
-    },
-    "trap": {
-      "actions": "R",
-      "openings": [
-        "A:R"
+    "requiredOrder": [
+      [
+        "A",
+        "B"
       ],
-      "solvable": false,
-      "lastChoiceDecisive": true
+      [
+        "A",
+        "C"
+      ],
+      [
+        "A",
+        "E"
+      ],
+      [
+        "B",
+        "C"
+      ],
+      [
+        "B",
+        "E"
+      ],
+      [
+        "C",
+        "E"
+      ]
+    ],
+    "closedTrap": {
+      "door": "D",
+      "action": "L",
+      "path": "DRUULRRULDLUUL",
+      "prior": [
+        "A:D",
+        "B:L",
+        "C:D"
+      ]
     },
-    "explanation": "AとB、CとDがそれぞれ同じ回転先を共有。AまたはCを先に開くと必須の相方が開かなくなる。B、Dの順で二つの結び目を通る。",
-    "restrictions": [
-      {
-        "id": "A",
-        "allowedPushes": [
-          "R"
-        ]
-      },
-      {
-        "id": "B",
-        "allowedPushes": [
-          "R"
-        ]
-      },
-      {
-        "id": "C",
-        "allowedPushes": [
-          "R"
-        ]
-      },
-      {
-        "id": "D",
-        "allowedPushes": [
-          "R"
-        ]
-      }
-    ],
-    "additionalTraps": [
-      {
-        "actions": "DRDRR",
-        "openings": [
-          "B:R",
-          "C:R"
-        ],
-        "solvable": false,
-        "lastChoiceDecisive": true
-      }
-    ],
-    "minimumBidirectionalOpens": 0,
-    "requiredInEveryWin": [],
-    "requiredOrder": []
+    "longDoors": [
+      "B",
+      "C"
+    ]
   },
   {
     "id": "020",
     "name": "DOOOOOR",
     "solvable": true,
-    "shortestSteps": 11,
-    "minimumDoorOpens": 3,
-    "canonical": "DRDRDRDLLDL",
+    "shortestSteps": 18,
+    "minimumDoorOpens": 4,
+    "canonical": "DDRRUUULDLRRUULDLU",
     "canonicalOpenings": [
-      "B:R",
-      "D:R",
-      "F:L"
+      "A:D",
+      "B:L",
+      "C:R",
+      "D:D"
     ],
-    "reachableStates": 42,
-    "deadStates": 22,
+    "reachableStates": 177,
+    "deadStates": 92,
     "alwaysClosed": [
-      "A",
-      "C",
       "E"
     ],
     "alwaysOpened": [
+      "A",
       "B",
-      "D",
-      "F"
+      "C",
+      "D"
     ],
     "operationOutcomes": {
-      "A:R": {
+      "A:D": {
+        "winningContinuation": true,
+        "deadContinuation": false
+      },
+      "A:U": {
         "winningContinuation": false,
         "deadContinuation": true
       },
-      "B:R": {
+      "B:L": {
         "winningContinuation": true,
         "deadContinuation": false
       },
       "C:R": {
-        "winningContinuation": false,
-        "deadContinuation": true
-      },
-      "D:R": {
         "winningContinuation": true,
-        "deadContinuation": false
+        "deadContinuation": true
       },
       "E:L": {
         "winningContinuation": false,
         "deadContinuation": true
       },
-      "F:L": {
+      "D:D": {
         "winningContinuation": true,
         "deadContinuation": false
       }
     },
     "trap": {
-      "actions": "R",
+      "actions": "LDRU",
       "openings": [
-        "A:R"
+        "A:U"
       ],
       "solvable": false,
       "lastChoiceDecisive": true
     },
-    "explanation": "二つの結び目をB→Dで抜け、下段を左へ戻る。最後はEを開くとFの左回転を塞ぐため、下へ回ってFを左に押す。逆向きの最後の結び目まで、三枚を閉じたまま残す。",
+    "explanation": "Aは下へ押すことが必須で、上へ押すと詰む。Cは早く右へ開くと詰むが、Aを先に動かしてから同じ右押しを必ず使う。Eを開くと長いBと干渉するため、全解で閉じて残す。長いBとCを動かした後に、最後の長いDへ。",
     "restrictions": [
       {
         "id": "A",
+        "length": 1,
         "allowedPushes": [
-          "R",
-          "L"
+          "U",
+          "D"
         ]
       },
       {
         "id": "B",
+        "length": 2,
         "allowedPushes": [
-          "R"
+          "L"
         ]
       },
       {
         "id": "C",
-        "allowedPushes": [
-          "R",
-          "L"
-        ]
-      },
-      {
-        "id": "D",
+        "length": 1,
         "allowedPushes": [
           "R"
         ]
       },
       {
-        "id": "E",
+        "id": "D",
+        "length": 2,
         "allowedPushes": [
-          "L"
+          "D"
         ]
       },
       {
-        "id": "F",
+        "id": "E",
+        "length": 1,
         "allowedPushes": [
           "L"
         ]
@@ -519,27 +656,76 @@
     ],
     "additionalTraps": [
       {
-        "actions": "DRDRR",
+        "actions": "LDRDRRUUULDR",
         "openings": [
-          "B:R",
           "C:R"
         ],
         "solvable": false,
         "lastChoiceDecisive": true
       },
       {
-        "actions": "DRDRDRDLLL",
+        "actions": "DDRRUUULDDL",
         "openings": [
-          "B:R",
-          "D:R",
+          "A:D",
           "E:L"
         ],
         "solvable": false,
         "lastChoiceDecisive": true
       }
     ],
-    "minimumBidirectionalOpens": 0,
-    "requiredInEveryWin": [],
-    "requiredOrder": []
+    "minimumBidirectionalOpens": 1,
+    "requiredInEveryWin": [
+      "A:D",
+      "B:L",
+      "C:R",
+      "D:D"
+    ],
+    "requiredOrder": [
+      [
+        "A",
+        "B"
+      ],
+      [
+        "A",
+        "C"
+      ],
+      [
+        "A",
+        "D"
+      ],
+      [
+        "B",
+        "D"
+      ],
+      [
+        "C",
+        "D"
+      ]
+    ],
+    "delayed": {
+      "door": "C",
+      "action": "R",
+      "path": "LDRDRRUUULDR",
+      "prior": []
+    },
+    "choice": {
+      "door": "A",
+      "action": "U",
+      "path": "LDRU",
+      "prior": [],
+      "correct": "D"
+    },
+    "closedTrap": {
+      "door": "E",
+      "action": "L",
+      "path": "DDRRUUULDDL",
+      "prior": [
+        "A:D"
+      ]
+    },
+    "longDoors": [
+      "B",
+      "D"
+    ]
   }
 ]

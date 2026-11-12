@@ -1,4 +1,4 @@
-import { add, DIRECTIONS, doorEdge, between, edgeKey, hasFloor, isWall } from './engine.js';
+import { add, scale, DIRECTIONS, between, edgeKey, hasFloor, swingCollision } from './engine.js';
 const S = 72;
 const line = (a, b, attrs = '') => `<line x1="${a[0] * S}" y1="${a[1] * S}" x2="${b[0] * S}" y2="${b[1] * S}" ${attrs}/>`;
 const angle = v => Math.atan2(v[1], v[0]) * 180 / Math.PI;
@@ -12,20 +12,22 @@ export function renderBoard(level, state, { opened, previous, reduced = false } 
   const hints = level.doors.map((door, i) => {
     if (state.doors[i]) return '';
     const [hx,hy] = door.hinge.map(n=>n*S);
+    const length=door.length??1;
     return door.push.map(a => {
-      const v = DIRECTIONS[a], end = add(door.hinge,v), blocked = isWall(level,[door.hinge,end]) || level.doors.some((d,j)=>j!==i && edgeKey(...doorEdge(d,state.doors[j]))===edgeKey(door.hinge,end));
-      const from = add(door.hinge,door.leaf), cross = door.leaf[0]*v[1]-door.leaf[1]*v[0];
-      return `<path d="M${from[0]*S} ${from[1]*S} A72 72 0 0 ${cross>0?1:0} ${end[0]*S} ${end[1]*S}" fill="none" stroke="${blocked?'#a06c63':'#b08048'}" stroke-width="1.5" stroke-dasharray="3 5" opacity=".55"/>${line(door.hinge,end,`stroke="${blocked?'#9b625a':'#b08048'}" stroke-width="3" stroke-dasharray="3 6" opacity=".45"`)}<path d="M-4 -4 L0 1 L4 -4" fill="none" stroke="#70532e" stroke-width="2" transform="translate(${hx+door.leaf[0]*S*.5-v[0]*13} ${hy+door.leaf[1]*S*.5-v[1]*13}) rotate(${angle(v)-90})"/>`;
+      const v = DIRECTIONS[a], end = add(door.hinge,scale(v,length)), blocked = !!swingCollision(level,state,i,a);
+      const from = add(door.hinge,scale(door.leaf,length)), cross = door.leaf[0]*v[1]-door.leaf[1]*v[0];
+      return `<path d="M${from[0]*S} ${from[1]*S} A${length*S} ${length*S} 0 0 ${cross>0?1:0} ${end[0]*S} ${end[1]*S}" fill="none" stroke="${blocked?'#a06c63':'#b08048'}" stroke-width="1.5" stroke-dasharray="3 5" opacity=".55"/>${line(door.hinge,end,`stroke="${blocked?'#9b625a':'#b08048'}" stroke-width="3" stroke-dasharray="3 6" opacity=".45"`)}${Array.from({length},(_,segment)=>`<path d="M-4 -4 L0 1 L4 -4" fill="none" stroke="#70532e" stroke-width="2" transform="translate(${hx+door.leaf[0]*S*(segment+.5)-v[0]*13} ${hy+door.leaf[1]*S*(segment+.5)-v[1]*13}) rotate(${angle(v)-90})"/>`).join('')}`;
     }).join('');
   }).join('');
   const leafs = level.doors.map((door,i) => {
     const open = state.doors[i], a = angle(open ? DIRECTIONS[open] : door.leaf), [hx,hy] = door.hinge.map(n=>n*S);
+    const size=(door.length??1)*S;
     let anim = '';
     if (opened === i && previous && !reduced) {
       const start = angle(door.leaf), diff = ((a-start+540)%360)-180;
       anim = `<animateTransform attributeName="transform" type="rotate" from="${start}" to="${start+diff}" dur="0.24s" fill="freeze"/>`;
     }
-    return `<g class="door" data-door="${door.id}" data-open="${open||'closed'}" transform="translate(${hx} ${hy})"><g transform="rotate(${a})">${anim}<rect x="3" y="-4" width="65" height="10" rx="2" fill="#18242c" opacity=".26" transform="translate(1 3)"/><rect x="2" y="-4" width="67" height="8" rx="2" fill="${open?'#95653e':'url(#wood)'}" stroke="#76502f" stroke-width="1.3"/><path d="M8 -2H63" stroke="#f7d49d" opacity=".7"/><circle cx="57" cy="0" r="2.7" fill="#ffe0a0"/>${open?'<path d="M54 -2l3 3 5-4" fill="none" stroke="#fff0bd" stroke-width="1.5"/>':''}</g><circle r="6" fill="#dfb66c" stroke="#735432" stroke-width="2"/><circle r="2" fill="#fff0b9"/><text x="${door.leaf[0]*29-7}" y="${door.leaf[1]*29-10}" class="door-label">${door.id}</text></g>`;
+    return `<g class="door" data-door="${door.id}" data-open="${open||'closed'}" data-length="${door.length??1}" transform="translate(${hx} ${hy})"><g transform="rotate(${a})">${anim}<rect x="3" y="-4" width="${size-7}" height="10" rx="2" fill="#18242c" opacity=".26" transform="translate(1 3)"/><rect x="2" y="-4" width="${size-5}" height="8" rx="2" fill="${open?'#95653e':'url(#wood)'}" stroke="#76502f" stroke-width="1.3"/><path d="M8 -2H${size-9}" stroke="#f7d49d" opacity=".7"/><circle cx="${size-15}" cy="0" r="2.7" fill="#ffe0a0"/>${open?`<path d="M${size-18} -2l3 3 5-4" fill="none" stroke="#fff0bd" stroke-width="1.5"/>`:''}</g><circle r="6" fill="#dfb66c" stroke="#735432" stroke-width="2"/><circle r="2" fill="#fff0b9"/><text x="${door.leaf[0]*29-7}" y="${door.leaf[1]*29-10}" class="door-label">${door.id}</text></g>`;
   }).join('');
   const [gx,gy]=level.goal.map(n=>n*S+36), [px,py]=state.p.map(n=>n*S+36);
   const win = state.p[0]===level.goal[0] && state.p[1]===level.goal[1];

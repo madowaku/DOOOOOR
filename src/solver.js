@@ -1,8 +1,8 @@
-import { DIRECTIONS, initialState, stateKey, isWin, transition, pointKey, edgeKey } from './engine.js';
+import { DIRECTIONS, initialState, stateKey, isWin, transition, compileLevel } from './engine.js';
 
 /** Exhaustively enumerates reachable states; no animation/UI or second physics implementation. */
 export function analyze(level, from = initialState(level)) {
-  level = { ...level, floorSet: new Set(level.cells.map(pointKey)), wallSet: new Set(level.walls.map(e=>edgeKey(...e))) };
+  level = compileLevel(level);
   const nodes = [{ state: from, path: '', openings: [] }], seen = new Map([[stateKey(from), 0]]);
   const wins = [], links = [];
   for (let head = 0; head < nodes.length; head++) {
