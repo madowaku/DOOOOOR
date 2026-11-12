@@ -31,7 +31,10 @@
         ]
       }
     ],
-    "additionalTraps": []
+    "additionalTraps": [],
+    "minimumBidirectionalOpens": 0,
+    "requiredInEveryWin": [],
+    "requiredOrder": []
   },
   {
     "id": "003",
@@ -65,7 +68,10 @@
         ]
       }
     ],
-    "additionalTraps": []
+    "additionalTraps": [],
+    "minimumBidirectionalOpens": 0,
+    "requiredInEveryWin": [],
+    "requiredOrder": []
   },
   {
     "id": "005",
@@ -118,19 +124,22 @@
         ]
       }
     ],
-    "additionalTraps": []
+    "additionalTraps": [],
+    "minimumBidirectionalOpens": 0,
+    "requiredInEveryWin": [],
+    "requiredOrder": []
   },
   {
     "id": "009",
     "name": "COME BACK",
     "solvable": true,
-    "shortestSteps": 3,
+    "shortestSteps": 11,
     "minimumDoorOpens": 1,
-    "canonical": "DRU",
+    "canonical": "DDDRRRUUULL",
     "canonicalOpenings": [
       "B:R"
     ],
-    "reachableStates": 6,
+    "reachableStates": 18,
     "deadStates": 0,
     "alwaysClosed": [
       "A"
@@ -145,7 +154,7 @@
       }
     },
     "trap": null,
-    "explanation": "隣の出口へ直進するとAの禁止側。まず出口から遠ざかり、下のBを押して上へ戻る。",
+    "explanation": "出口は右隣だがAは禁止側。左辺を3歩下り、下辺のBを右に開き、右辺を上って上辺から戻る11手の大回り。Bの葉は中央の抜け道を塞ぎ、対角の角まで歩く必要がある。",
     "restrictions": [
       {
         "id": "A",
@@ -160,34 +169,43 @@
         ]
       }
     ],
-    "additionalTraps": []
+    "additionalTraps": [],
+    "minimumBidirectionalOpens": 0,
+    "requiredInEveryWin": [
+      "B:R"
+    ],
+    "requiredOrder": []
   },
   {
     "id": "011",
     "name": "TWO WAYS",
     "solvable": true,
-    "shortestSteps": 3,
-    "minimumDoorOpens": 0,
-    "canonical": "LLL",
+    "shortestSteps": 4,
+    "minimumDoorOpens": 2,
+    "canonical": "RRDL",
     "canonicalOpenings": [
-      "A:L"
+      "A:R",
+      "B:L"
     ],
-    "reachableStates": 24,
+    "reachableStates": 9,
     "deadStates": 0,
     "alwaysClosed": [],
-    "alwaysOpened": [],
+    "alwaysOpened": [
+      "A",
+      "B"
+    ],
     "operationOutcomes": {
-      "A:L": {
+      "A:R": {
         "winningContinuation": true,
         "deadContinuation": false
       },
-      "A:R": {
+      "B:L": {
         "winningContinuation": true,
         "deadContinuation": false
       }
     },
     "trap": null,
-    "explanation": "最短は左へ3手。Aを左に押すと左下への辺が閉じる。下を回る5手・開扉0枚も意図した自由な練習解。回り込めば右からも左からも実際に開けられ、どちらもクリア可能。ここでは開扉を強制しない。",
+    "explanation": "Aを右に押すと真下の出口への辺を塞ぐ。右から回り、Bを左へ押して出口へ。全クリア状態でA:RとB:Lが必須。2枚とも両方向に物理的な回転余地があり、右押しと左押しを実際に体験する。開扉0の迂回解はない。",
     "restrictions": [
       {
         "id": "A",
@@ -195,9 +213,27 @@
           "R",
           "L"
         ]
+      },
+      {
+        "id": "B",
+        "allowedPushes": [
+          "R",
+          "L"
+        ]
       }
     ],
-    "additionalTraps": []
+    "additionalTraps": [],
+    "minimumBidirectionalOpens": 2,
+    "requiredInEveryWin": [
+      "A:R",
+      "B:L"
+    ],
+    "requiredOrder": [
+      [
+        "A",
+        "B"
+      ]
+    ]
   },
   {
     "id": "012",
@@ -288,7 +324,10 @@
         ]
       }
     ],
-    "additionalTraps": []
+    "additionalTraps": [],
+    "minimumBidirectionalOpens": 0,
+    "requiredInEveryWin": [],
+    "requiredOrder": []
   },
   {
     "id": "018",
@@ -374,7 +413,10 @@
         "solvable": false,
         "lastChoiceDecisive": true
       }
-    ]
+    ],
+    "minimumBidirectionalOpens": 0,
+    "requiredInEveryWin": [],
+    "requiredOrder": []
   },
   {
     "id": "020",
@@ -495,6 +537,9 @@
         "solvable": false,
         "lastChoiceDecisive": true
       }
-    ]
+    ],
+    "minimumBidirectionalOpens": 0,
+    "requiredInEveryWin": [],
+    "requiredOrder": []
   }
 ]

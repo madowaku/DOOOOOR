@@ -24,17 +24,17 @@ export const levels = [
   },
   {
     id:'009',name:'COME BACK',subtitle:'近づくために、遠ざかる',chapter:'II / TAKE THE LONG WAY',
-    hint:'出口はすぐ隣。でも、この側からは押せない。',
-    cells:[[0,0],[1,0],[0,1],[1,1],[1,2]],walls:[],start:[0,0],goal:[1,0],
-    doors:[door('A',[1,1],[0,-1],['L']),door('B',[1,2],[0,-1],['R'])],
-    proof:{concept:'away',required:['B:R'],leaveClosed:['A'],explanation:'隣の出口へ直進するとAの禁止側。まず出口から遠ざかり、下のBを押して上へ戻る。',blockedAfter:{path:'',action:'R',reason:'wrong-side'}}
+    hint:'隣の出口へ行くために、いちばん遠い角をめぐろう。',
+    cells:[[0,0],[1,0],[2,0],[3,0],[0,1],[3,1],[0,2],[2,2],[3,2],[0,3],[1,3],[2,3],[3,3]],walls:[],start:[0,0],goal:[1,0],
+    doors:[door('A',[1,1],[0,-1],['L']),door('B',[2,3],[0,1],['R'])],
+    proof:{concept:'away',required:['B:R'],requiredInEveryWin:['B:R'],leaveClosed:['A'],minimumSteps:11,explanation:'出口は右隣だがAは禁止側。左辺を3歩下り、下辺のBを右に開き、右辺を上って上辺から戻る11手の大回り。Bの葉は中央の抜け道を塞ぎ、対角の角まで歩く必要がある。',blockedAfter:{path:'',action:'R',reason:'wrong-side'}}
   },
   {
     id:'011',name:'TWO WAYS',subtitle:'蝶番は、どちらにも',chapter:'III / WHICH WAY?',
-    hint:'両側の矢印は、両側から押せるしるし。',
-    cells:rectangle(4,2),walls:[],start:[3,0],goal:[0,0],
-    doors:[door('A',[2,1],[0,-1],['R','L'])],
-    proof:{concept:'bidirectional',required:['A:L'],explanation:'最短は左へ3手。Aを左に押すと左下への辺が閉じる。下を回る5手・開扉0枚も意図した自由な練習解。回り込めば右からも左からも実際に開けられ、どちらもクリア可能。ここでは開扉を強制しない。',allowZeroOpens:true}
+    hint:'一枚目は右へ。二枚目は、反対側から。',
+    cells:[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1],[1,2],[2,2]],walls:[[[1,1],[1,2]],[[2,2],[2,3]]],start:[0,0],goal:[1,1],
+    doors:[door('A',[1,1],[0,-1],['R','L']),door('B',[2,2],[0,-1],['R','L'])],
+    proof:{concept:'bidirectional',required:['A:R','B:L'],requiredInEveryWin:['A:R','B:L'],minimumBidirectionalOpens:2,before:[['A','B']],minimumSteps:4,explanation:'Aを右に押すと真下の出口への辺を塞ぐ。右から回り、Bを左へ押して出口へ。全クリア状態でA:RとB:Lが必須。2枚とも両方向に物理的な回転余地があり、右押しと左押しを実際に体験する。開扉0の迂回解はない。'}
   },
   {
     id:'012',name:'CHOOSE',subtitle:'残す壁を、選ぶ',chapter:'III / A CHOICE HAS A SHAPE',

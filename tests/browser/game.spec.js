@@ -34,7 +34,7 @@ test('title → all eight rooms, undo, traps, persistence and actual screenshots
   await expect(page.locator('#board')).toHaveAttribute('data-player','0,0');
   for(let i=0;i<levels.length;i++){
     const level=levels[i];await expect(page.locator('.room-id')).toContainText(level.id);
-    if(['005','012','018','020'].includes(level.id))await page.screenshot({path:`docs/screenshots/${info.project.name}-${level.id}.png`,fullPage:true});
+    if(['005','009','011','012','018','020'].includes(level.id))await page.screenshot({path:`docs/screenshots/${info.project.name}-${level.id}.png`,fullPage:true});
     await play(page,level,analyze(level).best.path,mobile);
     await expect(page.getByRole('status')).toContainText('道が、つながった');
     await expect(page.locator('#steps')).toHaveText(String(analyze(level).best.path.length).padStart(2,'0'));
