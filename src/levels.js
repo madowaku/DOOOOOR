@@ -69,7 +69,7 @@ export const levels = [
       explanation: '正面Aの右押しは今は罠だが、全解で後から同じA:Rが必須。Bを下へ開け、長いCを左へ動かして戻り、Aを右へ。最後に長いDを下へ開く。',
       delayed: { door: 'A', action: 'R', path: 'R', prior: [] }
     },
-    instruction: '長いドアも一度だけ、90度。回る途中に壁やドアがあれば開きません。'
+    instruction: '2マスのドアも90度。途中の障害物にも注意。'
   },
   {
     id: '009',
